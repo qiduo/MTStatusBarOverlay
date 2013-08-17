@@ -169,10 +169,9 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) UIImageView *statusBarBackgroundImageView;
-@property (nonatomic, strong) UILabel *statusLabel1;
-@property (nonatomic, strong) UILabel *statusLabel2;
+@property (nonatomic, strong, readwrite) UILabel *statusLabel1;
+@property (nonatomic, strong, readwrite) UILabel *statusLabel2;
 @property (nonatomic, unsafe_unretained) UILabel *hiddenStatusLabel;
-@property (unsafe_unretained, nonatomic, readonly) UILabel *visibleStatusLabel;
 @property (nonatomic, strong) UIImageView *progressView;
 @property (nonatomic, assign) CGRect oldBackgroundViewFrame;
 // overwrite property for read-write-access
@@ -204,8 +203,6 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 - (void)setStatusBarBackgroundForStyle:(UIStatusBarStyle)style;
 // updates the text-colors of the labels for the given style and message type
 - (void)setColorSchemeForStatusBarStyle:(UIStatusBarStyle)style messageType:(MTMessageType)messageType;
-// updates the visiblity of the activity indicator and finished-label depending on the type
-- (void)updateUIForMessageType:(MTMessageType)messageType duration:(NSTimeInterval)duration;
 // updates the size of the progressView to always cover only the displayed text-frame
 - (void)updateProgressViewSizeForLabel:(UILabel *)label;
 // calls the delegate when a switch from one message to another one occured

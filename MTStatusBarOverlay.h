@@ -92,6 +92,10 @@ typedef enum MTMessageType {
 @property (nonatomic, assign) MTStatusBarOverlayAnimation animation;
 // the label that holds the finished-indicator (either a checkmark, or a error-sign per default)
 @property (nonatomic, strong) UILabel *finishedLabel;
+// the status label
+@property (nonatomic, strong, readonly) UILabel *statusLabel1;
+@property (nonatomic, strong, readonly) UILabel *statusLabel2;
+@property (unsafe_unretained, nonatomic, readonly) UILabel *visibleStatusLabel;
 // if this flag is set to YES, neither activityIndicator nor finishedLabel are shown
 @property (nonatomic, assign) BOOL hidesActivity;
 // the image used when the Status Bar Style is Default
@@ -116,7 +120,8 @@ typedef enum MTMessageType {
 @property (nonatomic, copy) NSString *detailText;
 // the delegate of the overlay
 @property (nonatomic, unsafe_unretained) id<MTStatusBarOverlayDelegate> delegate;
-@property(nonatomic, strong) UIColor *customTextColor;
+@property (nonatomic, strong) UIColor *customTextColor;
+
 //===========================================================
 #pragma mark -
 #pragma mark Class Methods
@@ -175,6 +180,9 @@ typedef enum MTMessageType {
 - (void)saveStateSynchronized:(BOOL)synchronizeAtEnd;
 // restores the state from NSUserDefaults
 - (void)restoreState;
+
+// custom
+- (void)updateUIForMessageType:(MTMessageType)messageType duration:(NSTimeInterval)duration;
 
 @end
 
