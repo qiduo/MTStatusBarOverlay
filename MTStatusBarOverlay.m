@@ -99,7 +99,7 @@ MAX([UIApplication sharedApplication].statusBarFrame.size.width, [UIApplication 
 ///////////////////////////////////////////////////////
 
 // minimum time that a message is shown, when messages are queued
-#define kMinimumMessageVisibleTime				0.4f
+#define kMinimumMessageVisibleTime				1.f
 
 // duration of the animation to show next status message in seconds
 #define kNextStatusAnimationDuration			0.6f
@@ -158,6 +158,9 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 // default-width of the small-mode
 #define kWidthSmall						26.f
 
+
+#define kCameraAppearNotification @"CameraAppears"
+#define kCameraDisappearNotification @"CameraDisappears"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -286,7 +289,7 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 		}
         
 		// Place the window on the correct level and position
-        self.windowLevel = UIWindowLevelStatusBar+1.f;
+        self.windowLevel = UIWindowLevelStatusBar;
         self.frame = statusBarFrame;
 		self.alpha = 0.f;
 		self.hidden = NO;
@@ -458,6 +461,10 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
                                                  selector:@selector(applicationWillResignActive:)
                                                      name:UIApplicationWillResignActiveNotification object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:kCameraDisappearNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:kCameraAppearNotification object:nil];
+        
         // initial rotation, fixes the issue with a wrong bar appearance in landscape only mode
         [self rotateToStatusBarFrame:nil];
     }
@@ -627,6 +634,7 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 ////////////////////////////////////////////////////////////////////////
 
 - (void)showNextMessage {
+    
     if (self.forcedToHide) {
         return;
     }
@@ -659,12 +667,10 @@ kDetailViewWidth, kHistoryTableRowHeight*kMaxHistoryTableRowCount + kStatusBarHe
 		@synchronized(self.messageQueue) {
 			[self.messageQueue removeAllObjects];
 		}
-        
 		self.active = NO;
         
 		return;
 	}
-    
 	// don't duplicate animation if already displaying with text
 	if (!self.reallyHidden && [self.visibleStatusLabel.text isEqualToString:message]) {
 		// remove unneccesary message
