@@ -65,9 +65,9 @@ MAX([UIApplication sharedApplication].statusBarFrame.size.width, [UIApplication 
 #define kLightThemeTextColor						[UIColor blackColor]
 #define kLightThemeErrorMessageTextColor            [UIColor blackColor] // [UIColor colorWithRed:0.494898f green:0.330281f blue:0.314146f alpha:1.0f]
 #define kLightThemeFinishedMessageTextColor         [UIColor blackColor] // [UIColor colorWithRed:0.389487f green:0.484694f blue:0.38121f alpha:1.0f]
-#define kLightThemeShadowColor                      [UIColor whiteColor]
-#define kLightThemeErrorMessageShadowColor          [UIColor whiteColor]
-#define kLightThemeFinishedMessageShadowColor       [UIColor whiteColor]
+#define kLightThemeShadowColor                      nil
+#define kLightThemeErrorMessageShadowColor          nil
+#define kLightThemeFinishedMessageShadowColor       nil
 #define kLightThemeActivityIndicatorViewStyle		UIActivityIndicatorViewStyleGray
 #define kLightThemeDetailViewBackgroundColor		[UIColor blackColor]
 #define kLightThemeDetailViewBorderColor			[UIColor darkGrayColor]
